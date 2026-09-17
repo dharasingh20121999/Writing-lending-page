@@ -24,15 +24,40 @@
     </noscript>
     <!-- End Meta Pixel Code -->
 
-    <!-- Direct Tracking Function -->
+    <!-- Direct Tracking & Conversions API (CAPI) Function -->
     <script>
       function trackAllEvents() {
+        // 1. Browser Meta Pixel Events
         if (typeof fbq !== 'undefined') {
           fbq('track', 'Lead');
           fbq('track', 'Contact');
           fbq('track', 'Subscribe');
           fbq('trackCustom', 'TelegramClick');
         }
+
+        // 2. Server Conversions API Call
+        const pixelId = '1005774185856199';
+        const accessToken = 'EAAUozGAZC2WcBSrZCZCZAejRq5IcbGTNYkG68XjZBfcm85N0tjZBQkFFVR7wcDF071WUKYCObWQX2Ozow0YcW4y6eUkKuENuFU2EvWhPOhk7wh8SaH1K1x8gxNTwEWSHszVT6JETZCZAO2L20lPJrNzPk6Du1k0OVdCQoLfon6vDeR4eMnQPN4lY6f0Vs8JJ7Gx8VgZDZD';
+
+        fetch(`https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: [
+              {
+                event_name: 'Lead',
+                event_time: Math.floor(Date.now() / 1000),
+                action_source: 'website',
+                event_source_url: window.location.href,
+                user_data: {
+                  client_user_agent: navigator.userAgent
+                }
+              }
+            ]
+          })
+        }).catch(err => console.log('CAPI Error:', err));
       }
     </script>
 
