@@ -21,6 +21,17 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1005774185856199&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+    <script>
+  function trackTelegramClick() {
+    // Standard Meta Events
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead');
+      fbq('track', 'Contact');
+      fbq('track', 'Subscribe');
+      fbq('trackCustom', 'TelegramClick');
+    }
+  }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
